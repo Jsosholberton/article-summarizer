@@ -1,4 +1,4 @@
-import {Request, Response} from "express";
+import {Request, Response, NextFunction} from "express";
 import {getUser} from "./getUser";
 
 /**
@@ -9,7 +9,7 @@ import {getUser} from "./getUser";
  * @param {object} res - Express response object.
  * @param {function} next - Next middleware or route handler function.
  */
-const checkAuth = async (req: Request, res: Response, next: any) => {
+const checkAuth = async (req: Request, res: Response, next: NextFunction) => {
   let token: string;
 
   if (
