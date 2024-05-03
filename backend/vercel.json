@@ -1,7 +1,8 @@
 {
-  "builds" : [
+  "devCommand": "npm run dev",
+  "builds": [
     {
-      "src": "./index.js",
+      "src": "./server.ts",
       "use": "@vercel/node"
     }
   ],
