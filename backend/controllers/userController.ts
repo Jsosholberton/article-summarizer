@@ -4,6 +4,7 @@ import genJWT from "../helpers/jwtGenerator";
 import {emailReg, emailPwd} from "../helpers/emailSender"
 import {Request, Response} from "express";
 import {UserTypes} from "../types/user.types";
+import {getUser} from "../middleware/getUser";
 
 const register = async (req: Request, res: Response) => {
 
@@ -73,7 +74,7 @@ const confirm = async (req: Request, res: Response) => {
     userConfirm.confirm = true;
     userConfirm.token = "";
     await userConfirm.save();
-    return res.json({msg: "User confirm correctly"});
+    return res.json({msg: "User confirmed correctly"});
   } catch (err) {
     console.log(err);
   }
@@ -137,7 +138,8 @@ const newPwd = async (req: Request, res: Response) => {
 };
 
 const profile = async (req: Request, res: Response) => {
-  return res.status(200).json(req.body);
+  const token = req.headers.authorization?.split(' ')[1];
+  return res.status(200).json({user: await getUser(token)})
 }
 
 export {

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 /**
- * Mongoose schema to represent a chat.
+ * Mongoose schema to represent a chats.
  */
 const chatSchema = new mongoose.Schema({
   user: {
@@ -13,7 +13,7 @@ const chatSchema = new mongoose.Schema({
     required: true
   },
   messages: [{
-    message: {
+    content: {
       type: String,
       required: true
     },

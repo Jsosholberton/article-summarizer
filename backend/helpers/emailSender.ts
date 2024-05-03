@@ -31,7 +31,7 @@ export const emailReg = async (data: EmailData) => {
     html: `
       <p style="font-family: Arial, sans-serif; font-size: 16px; color: #333;">Hi: ${name} confirm your account on Article Summarizer</p>
       <p style="font-family: Arial, sans-serif; font-size: 16px; color: #333;">Your account is almost ready. You just have to confirm it by clicking the link below:</p>
-      <p style="font-family: Arial, sans-serif; font-size: 16px; color: #333;"><a href="${process.env.FRONTEND_URL!}confirm/${token}" style="text-decoration: none; color: #007bff;">Confirm my account</a></p>
+      <p style="font-family: Arial, sans-serif; font-size: 16px; color: #333;"><a href="${process.env.FRONTEND_URL!}auth/confirm/${token}" style="text-decoration: none; color: #007bff;">Confirm my account</a></p>
       <p style="font-family: Arial, sans-serif; font-size: 16px; color: #333;">If you didn't create this account, you can ignore this message.</p>
     `
   });
@@ -63,7 +63,7 @@ export const emailPwd = async (data: EmailDataPwd) => {
     text: "Restore your password on Article Summarizer",
     html: `<p>Hi: ${name} restore your password from your account on Article Summarizer</p>
       <p>Follow the next link to restore your password:
-      <a href="${process.env.FRONTEND_URL!}lost-password/${token}">Restore</a> </p>
+      <a href="${process.env.FRONTEND_URL!}auth/lost-password/${token}">Restore</a> </p>
       <p>If you didn't restore the password, you can ignore the message</p>
       `
   });

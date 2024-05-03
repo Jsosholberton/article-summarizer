@@ -6,17 +6,21 @@ import {load} from 'cheerio';
  * @param url
  * @returns title and text of the article
  */
-export const getArticle = async (url: string): Promise<string | null> => {
-  const response = await axios.get(url);
+export const getArticle = async (url: string): Promise<{ title: string, body: string } | null> => {
+  try {
+    const response = await axios.get(url);
+    const html = response.data;
 
-  const html = response.data;
+    const $ = load(html);
 
-  const $ = load(html);
-
-  // Extract text from paragraphs, headers, and lists
-  const paragraphs = $("p").text().trim();
-  const headers = $("h1, h2, h3, h4, h5, h6").text().trim();
-  const lists = $("li").text().trim();
-
-  return `${headers}\n\n${paragraphs}\n\n${lists}`
+    // Extract text from paragraphs, headers, and lists
+    const title = $("h1").text().trim();
+    const paragraphs = $("p").text().trim();
+    const headers = $("h1, h2, h3, h4, h5, h6").text().trim();
+    const lists = $("li").text().trim();
+    return {title: title, body: `${headers}\n\n${paragraphs}\n\n${lists}`}
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
 }

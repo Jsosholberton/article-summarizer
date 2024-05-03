@@ -2,8 +2,8 @@ export interface ChatTypes {
   user: string;
   title: string;
   messages: {
-    message: string;
-    system: boolean;
+    content: string;
+    role: "system" | "user" | "assistant";
   }[];
   hasArchive: boolean;
   createdAt: Date;
