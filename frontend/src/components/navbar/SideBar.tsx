@@ -20,6 +20,11 @@ export default function SideBar() {
   const getChats = async () => {
 
     const token = localStorage.getItem('token')
+
+    if (!token) {
+      router.push('/')
+    }
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/articles`, {
         headers: {
