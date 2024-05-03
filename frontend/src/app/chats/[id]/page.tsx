@@ -39,7 +39,7 @@ export default function Page({params}: { params: { id: string } }) {
           return {
             ...message, content: await serialize(message.content, {
                 mdxOptions: {
-                  development: true,
+                  development: process.env.NEXT_PUBLIC_DEVELOPMENT ? true : false,
                 }
               }
             )
