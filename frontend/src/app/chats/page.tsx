@@ -24,6 +24,7 @@ export default function Chat() {
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/articles`, {
       method: "POST",
+      mode: "no-cors",
       headers: {
         'Authorization': `Bearer ${token}`,
       },
