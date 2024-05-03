@@ -1,9 +1,9 @@
 'use client'
-import {MDXRemote} from 'next-mdx-remote';
+import {MDXRemote, MDXRemoteSerializeResult} from 'next-mdx-remote';
 import DesignSystem from "./DesingSystem";
 
 interface RenderMdxProps {
-  mdxSource: any;
+  mdxSource: MDXRemoteSerializeResult;
 }
 
 export default function RenderMdx({mdxSource}: RenderMdxProps) {
