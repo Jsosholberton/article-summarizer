@@ -4,9 +4,10 @@ import React, {useEffect, useState} from "react";
 import {ArchiveIcon, DeleteIcon, LogoutIcon, MenuCloseIcon, MenuIcon} from "@/components/Icons";
 import {useParams} from "next/navigation"
 import {useRouter} from "next/navigation";
+import {ChatTypes} from "@/types/chat.types";
 
 export default function SideBar() {
-  const [chats, setChats] = useState([])
+  const [chats, setChats] = useState<ChatTypes[]>([])
   const [tab, setTab] = useState(0);
   const [toggle, setToggle] = useState(false)
   const [user, setUser] = useState<UserTypes>()
@@ -60,7 +61,7 @@ export default function SideBar() {
         console.log(data.error)
         return
       }
-      setChats(chats.map((chat: any) => chat._id === id ? {...chat, hasArchive: !chat.hasArchive} : chat) as any);
+      setChats(chats.map((chat) => chat._id === id ? {...chat, hasArchive: !chat.hasArchive} : chat));
     } catch (e) {
       console.log(e)
     }
@@ -80,7 +81,7 @@ export default function SideBar() {
         console.log(data.error)
         return
       }
-      setChats(chats.filter((chat: any) => chat._id !== id))
+      setChats(chats.filter((chat) => chat._id !== id))
     } catch (e) {
       console.log(e)
     }
@@ -140,7 +141,7 @@ export default function SideBar() {
                   {chats?.length > 0 ? (
                     <>
                       {
-                        chats.map((chat: any, index: number) => (
+                        chats.map((chat, index: number) => (
                           ((tab === 0 && !chat.hasArchive) || (tab === 1 && chat.hasArchive)) && (
                             <Link
                               className={`${active === chat._id && "bg-[#1E1E1E]"} group py-2 px-4 my-1 relative flex items-center text-white hover:bg-[#1E1E1E] hover:text-white rounded-lg transition-colors duration-200 ease-in-out overflow-hidden`}

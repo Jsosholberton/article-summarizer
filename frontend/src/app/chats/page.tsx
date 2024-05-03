@@ -12,7 +12,7 @@ export default function Chat() {
 
   const router = useRouter()
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
 
@@ -35,8 +35,8 @@ export default function Chat() {
       }
 
       if (data) return router.push(`/chats/${data._id}`)
-    } catch (e: any) {
-      setError(e.message)
+    } catch (e) {
+      console.error(e)
     } finally {
       setLoading(false)
     }
