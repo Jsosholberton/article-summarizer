@@ -10,17 +10,13 @@ export default function Chat() {
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
 
-  const token = localStorage.getItem('token')
-
   const router = useRouter()
-
-  if (!token) {
-    router.push('/')
-  }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
     setLoading(true)
+
+    const token = localStorage.getItem('token')
 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/articles`, {
