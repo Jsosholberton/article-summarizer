@@ -99,7 +99,7 @@ export default function Page({params}: { params: { id: string } }) {
           content: await serialize(data.chat.content,
             {
               mdxOptions: {
-                development: true,
+                development: process.env.NEXT_PUBLIC_DEVELOPMENT ? true : false,
               }
             }
           ), role: "assistant"
