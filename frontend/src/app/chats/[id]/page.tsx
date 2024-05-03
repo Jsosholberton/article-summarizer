@@ -5,9 +5,12 @@ import RenderMDX from "@/components/mdx/RenderMDX";
 import {serialize} from 'next-mdx-remote/serialize'
 import Loading from "@/components/loaders/Loading";
 import {useRouter} from "next/navigation";
+import {ChatTypes} from "@/types/chat.types";
+import {MDXRemoteSerializeResult} from "next-mdx-remote";
 
 export default function Page({params}: { params: { id: string } }) {
-  const [chat, setChat] = useState<any>({});
+
+  const [chat, setChat] = useState<Partial<ChatTypes>>({});
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
   const messageContainerRef = useRef<HTMLDivElement>(null);
@@ -34,12 +37,14 @@ export default function Page({params}: { params: { id: string } }) {
         return setError(data.error)
       }
 
-      const messages = data.chat.messages.map(async (message: any) => {
+      const chat = data.chat as ChatTypes;
+
+      const messages = chat.messages.map(async (message) => {
         if (message.role === "assistant") {
           return {
             ...message, content: await serialize(message.content, {
                 mdxOptions: {
-                  development: process.env.NEXT_PUBLIC_DEVELOPMENT ? true : false,
+                  development: !!process.env.NEXT_PUBLIC_DEVELOPMENT,
                 }
               }
             )
@@ -72,10 +77,13 @@ export default function Page({params}: { params: { id: string } }) {
     }
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setMessage('');
-    const copyChat = {...chat, messages: [...chat.messages, {content: message, role: "user"}]};
+    const copyChat: Partial<ChatTypes> = {
+      ...chat,
+      messages: [...(chat.messages || []), {content: message, role: "user"}]
+    };
     setChat(copyChat);
     try {
       setLoading(true);
@@ -95,11 +103,11 @@ export default function Page({params}: { params: { id: string } }) {
       }
       console.log(data);
       setChat({
-        ...copyChat, messages: [...copyChat.messages, {
+        ...copyChat, messages: [...(copyChat.messages || []), {
           content: await serialize(data.chat.content,
             {
               mdxOptions: {
-                development: process.env.NEXT_PUBLIC_DEVELOPMENT ? true : false,
+                development: !!process.env.NEXT_PUBLIC_DEVELOPMENT,
               }
             }
           ), role: "assistant"
@@ -108,7 +116,7 @@ export default function Page({params}: { params: { id: string } }) {
     } catch (e) {
       console.log(e);
       setChat({
-        ...chat, messages: [...chat.messages, {
+        ...chat, messages: [...(chat.messages || []), {
           content: await serialize("An error occurred", {
             mdxOptions: {
               development: true,
@@ -128,13 +136,14 @@ export default function Page({params}: { params: { id: string } }) {
         {loading && <Loading/>}
         <div ref={messageContainerRef}
              className="flex w-full flex-col items-center overflow-y-auto space-y-4 small-scroll">
-          {chat?.messages?.map((message: any, index: number) => (
-            <div key={index} className='w-full '>
+          {chat?.messages?.map((message, index: number) => (
+            <div key={index} className='w-full'>
               <p className='font-semibold'>{message.role === "assistant" ? "Summarizer" : "You"}</p>
               <div
                 className={`w-full rounded px-10 font-light text-neutral-300 text-wrap break-words`}>
-                {message.role === "assistant" ?
-                  <RenderMDX mdxSource={message.content}/> : message.content
+                {message.role === "assistant"
+                  ? <RenderMDX mdxSource={message.content as MDXRemoteSerializeResult}/>
+                  : typeof message.content === 'string' && message.content
                 }
               </div>
             </div>
