@@ -10,7 +10,7 @@ export default function Chat() {
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
 
-  const token = typeof localStorage !== "undefined" ?? localStorage.getItem('token')
+  const token = localStorage.getItem('token')
 
   const router = useRouter()
 
@@ -24,9 +24,9 @@ export default function Chat() {
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/articles`, {
       method: "POST",
-      mode: "no-cors",
       headers: {
         'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({url: message})
     })
