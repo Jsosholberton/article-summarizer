@@ -22,22 +22,28 @@ export default function Chat() {
     e.preventDefault()
     setLoading(true)
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/articles`, {
-      method: "POST",
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({url: message})
-    })
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/articles`, {
+        method: "POST",
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({url: message})
+      })
 
-    const data = await res.json()
+      const data = await res.json()
 
-    if (data.error) {
-      return setError(data.error)
+      if (data.error) {
+        return setError(data.error)
+      }
+
+      if (data) return router.push(`/chats/${data._id}`)
+    } catch (e: any) {
+      setError(e.message)
+    } finally {
+      setLoading(false)
     }
-
-    if (data) return router.push(`/chats/${data._id}`)
   }
 
   return (
