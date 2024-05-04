@@ -27,7 +27,7 @@ const Home = () => {
           <div className="bg-white p-6 rounded-lg flex flex-col gap-8 items-center justify-center">
             <ParticlesIcon className='w-12 h-12 text-black'/>
             <h2 className="text-xl font-semibold mb-2 text-black">Sign Up</h2>
-            <p className="text-gray-700 text-pretty text-center">Don't have an account yet? Sign up to get started.</p>
+            <p className="text-gray-700 text-pretty text-center">Dont have an account yet? Sign up to get started.</p>
             <Link href="/auth/signup" className="mt-4 bg-black text-white px-6 py-3 rounded-lg">Sign Up
             </Link>
           </div>
