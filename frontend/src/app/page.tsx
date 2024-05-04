@@ -1,16 +1,9 @@
-import Head from 'next/head';
 import Link from 'next/link';
 import {ParticlesIcon, TrophyIcon} from "@/components/Icons";
 
-const Home = () => {
+export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white">
-      <Head>
-        <title>Article Summarizer</title>
-        <meta name="description" content="Summarize Articles with OpenAI API"/>
-        <link rel="icon" href="/favicon.ico"/>
-      </Head>
-
       <main className="p-10 flex flex-col items-center justify-center flex-1">
         <h1 className="text-4xl font-bold mb-8">Article Summarizer</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -36,5 +29,3 @@ const Home = () => {
     </div>
   );
 };
-
-export default Home;

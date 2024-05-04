@@ -5,6 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(`${process.env.NEXT_PUBLIC_BASE_URL}`),
   title: "Summarizer",
   description: "Summarizer is a AI tool that helps you summarize articles and you can ask the AI about them.",
 };

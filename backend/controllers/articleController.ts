@@ -28,8 +28,10 @@ export const getSummary = async (req: Request, res: Response) => {
   // Check the length of the article
   if (article.body.length < 100) return res.status(400).json({error: "Article is too short"});
 
-  // 3. process the article with OPENAI API and get the summary
-  const summary = await firstMessage(article.body);
+  // 3. process the article with OPENAI API and get the summary reduced to 50000 characters max
+  const summary = await firstMessage(article.body.slice(0, 50000));
+
+  if (!summary) return res.status(500).json({error: "Failed to summarize the article, error with the AI model"});
 
   // 4. Save the chats to the database
   const chat = new Chat({
