@@ -14,7 +14,7 @@ const register = async (req: Request, res: Response) => {
 
   if (existUser) {
     const error = new Error('Email actually is register');
-    return res.status(400).json({msg: error.message});
+    return res.status(400).json({msg: error.message, error:true});
   }
 
   try {
@@ -31,6 +31,7 @@ const register = async (req: Request, res: Response) => {
     res.json({msg: "User created correctly, check your email to confirm the account"});
   } catch (err) {
     console.log(err);
+    return res.status(500).json({msg: "Something went wrong", error:true});
   }
 }
 
@@ -41,12 +42,12 @@ const authenticate = async (req: Request, res: Response) => {
   const instUser: UserTypes = await User.findOne({email});
   if (!instUser) {
     const error = new Error('User not exist');
-    return res.status(404).json({msg: error.message});
+    return res.status(404).json({msg: error.message, error:true});
   }
   // check if the user is confirmed
   if (!instUser.confirm) {
     const error = new Error('Your account is not confirmed');
-    return res.status(404).json({msg: error.message});
+    return res.status(404).json({msg: error.message, error: true});
   }
   // check the pwd
   if (await instUser.checkPassword(password)) {
@@ -59,7 +60,7 @@ const authenticate = async (req: Request, res: Response) => {
     });
   } else {
     const error = new Error('The password is incorrect');
-    return res.status(403).json({msg: error.message});
+    return res.status(403).json({msg: error.message, error:true});
   }
 };
 
@@ -68,7 +69,7 @@ const confirm = async (req: Request, res: Response) => {
   const userConfirm = await User.findOne({token});
   if (!userConfirm) {
     const error = new Error('Invalid Token');
-    return res.status(403).json({msg: error.message});
+    return res.status(403).json({msg: error.message, error:true});
   }
   try {
     userConfirm.confirm = true;
@@ -77,6 +78,7 @@ const confirm = async (req: Request, res: Response) => {
     return res.json({msg: "User confirmed correctly"});
   } catch (err) {
     console.log(err);
+    return res.status(500).json({msg: "Something went wrong", error:true});
   }
 }
 
@@ -86,7 +88,7 @@ const lostPwd = async (req: Request, res: Response) => {
 
   if (!instUser) {
     const error = new Error('User not exist');
-    return res.status(404).json({msg: error.message});
+    return res.status(404).json({msg: error.message, error:true});
   }
 
   try {
@@ -102,6 +104,7 @@ const lostPwd = async (req: Request, res: Response) => {
 
   } catch (err) {
     console.log(err);
+    return res.status(500).json({msg: "Something went wrong", error:true});
   }
 };
 
@@ -112,7 +115,7 @@ const checkToken = async (req: Request, res: Response) => {
     res.json({msg: "Token is valid and the user exist"})
   } else {
     const error = new Error('Invalid token');
-    return res.status(404).json({msg: error.message});
+    return res.status(404).json({msg: error.message, error:true});
   }
 };
 
@@ -130,10 +133,11 @@ const newPwd = async (req: Request, res: Response) => {
       res.json({msg: "Password has been changed successfully"});
     } catch (err) {
       console.log(err);
+      return res.status(500).json({msg: "Something went wrong", error:true});
     }
   } else {
     const error = new Error('Invalid token');
-    return res.status(404).json({msg: error.message});
+    return res.status(404).json({msg: error.message, error:true});
   }
 };
 

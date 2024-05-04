@@ -1,7 +1,6 @@
 'use client'
 import Button from "@/components/atoms/Button";
 import {useState} from "react";
-import {useRouter} from "next/navigation"
 
 export default function SignUpForm() {
 
@@ -9,9 +8,8 @@ export default function SignUpForm() {
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
+  const [alert, setAlert] = useState<{ error: boolean, msg: string }>()
 
-  const router = useRouter()
 
   const handleSignUp = async () => {
     setLoading(true)
@@ -23,16 +21,14 @@ export default function SignUpForm() {
         },
         body: JSON.stringify({email, password, name})
       })
+
       const data = await response.json()
 
-      if (data.msg) {
-        setError(data.msg)
-        return
-      }
-      router.push('/auth/login')
+      if (data)
+        setAlert({error: data.error, msg: data.msg})
     } catch (e) {
       console.log(e)
-      setError("Something went wrong")
+      setAlert({error: true, msg: "Something went wrong"})
     } finally {
       setLoading(false)
     }
@@ -40,22 +36,28 @@ export default function SignUpForm() {
 
   return (
     <form
-      className='flex w-full flex-col items-center justify-around gap-4 rounded-xl px-10 py-16'>
+      onSubmit={handleSignUp}
+      className='flex w-full flex-col items-center justify-around gap-4 rounded-xl px-10 py-16 transition-all ease-in-out'>
       <h3 className='text-2xl font-light text-white'>Summarizer</h3>
-      <label htmlFor="name" className='flex flex-col'>Name
-        <input type='text' name='name' className='px-2 py-1 text-black rounded' value={name}
-               onChange={e => setName(e.target.value)}/>
-      </label>
-      <label htmlFor="email" className='flex flex-col'>Email
-        <input type='email' name='email' className='px-2 py-1 text-black rounded' value={email}
-               onChange={e => setEmail(e.target.value)}/>
-      </label>
-      <label htmlFor="password" className='flex flex-col'>Password
-        <input type='password' name='password' className='px-2 py-1 text-black rounded' value={password}
-               onChange={e => setPassword(e.target.value)}/>
-      </label>
-      <Button type='button' loading={loading} onClick={handleSignUp}>Sign up</Button>
-      {error && <p className='text-red-600'>{error}</p>}
+      {(!alert || alert?.error) && (
+        <>
+          <label htmlFor="name" className='flex flex-col'>Name
+            <input type='text' name='name' required className='px-2 py-1 text-black rounded' value={name}
+                   onChange={e => setName(e.target.value)}/>
+          </label>
+          <label htmlFor="email" className='flex flex-col'>Email
+            <input type='email' name='email' required className='px-2 py-1 text-black rounded' value={email}
+                   onChange={e => setEmail(e.target.value)}/>
+          </label>
+          <label htmlFor="password" className='flex flex-col'>Password
+            <input type='password' name='password' required className='px-2 py-1 text-black rounded' value={password}
+                   onChange={e => setPassword(e.target.value)}/>
+          </label>
+          <Button type='submit' loading={loading}>Sign up</Button>
+        </>
+      )}
+      {alert &&
+          <p className={`${alert?.error ? "text-red-600" : "text-green-600 text-4xl font-semibold"}`}>{alert.msg}</p>}
     </form>
   )
 }
