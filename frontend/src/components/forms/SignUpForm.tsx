@@ -43,15 +43,15 @@ export default function SignUpForm() {
       {(!alert || alert?.error) && (
         <>
           <label htmlFor="name" className='flex flex-col'>Name
-            <input type='text' name='name' required className='px-2 py-1 text-black rounded' value={name}
+            <input type='text' name='name' required className='rounded px-2 py-1 text-black' value={name}
                    onChange={e => setName(e.target.value)}/>
           </label>
           <label htmlFor="email" className='flex flex-col'>Email
-            <input type='email' name='email' required className='px-2 py-1 text-black rounded' value={email}
+            <input type='email' name='email' required className='rounded px-2 py-1 text-black' value={email}
                    onChange={e => setEmail(e.target.value)}/>
           </label>
           <label htmlFor="password" className='flex flex-col'>Password
-            <input type='password' name='password' required className='px-2 py-1 text-black rounded' value={password}
+            <input type='password' name='password' required className='rounded px-2 py-1 text-black' value={password}
                    onChange={e => setPassword(e.target.value)}/>
           </label>
           <Button type='submit' loading={loading}>Sign up</Button>

@@ -43,27 +43,27 @@ export default function Chat() {
   }
 
   return (
-    <div className='w-full bg-neutral-800 flex flex-col px-25 justify-end'>
-      <h2 className='text-xl p-4 sm:p-0 sm:text-2xl text-center'>Put the link of the article to start the
+    <div className='flex w-full flex-col justify-end bg-neutral-800 px-25'>
+      <h2 className='p-4 text-center text-xl sm:p-0 sm:text-2xl'>Put the link of the article to start the
         conversation</h2>
-      {error && <p className='text-red-600 font-extralight text-center'>{error}</p>}
+      {error && <p className='text-center font-extralight text-red-600'>{error}</p>}
       {loading && <Loading/>}
       <form
         onSubmit={handleSubmit}
-        className='mx-auto my-10 p-25 relative w-full max-w-3xl'>
+        className='relative mx-auto my-10 w-full max-w-3xl p-25 px-5'>
         <input
           disabled={loading}
           type='url'
           pattern="https?://.*"
           placeholder='Start writing the article link...'
-          className='px-10 bg-transparent border border-neutral-600 py-5 w-full rounded-lg placeholder:text-neutral-500'
+          className='w-full rounded-lg border border-neutral-600 bg-transparent px-10 py-5 placeholder:text-neutral-500'
           value={message}
           onChange={e => setMessage(e.target.value)}
         />
         <button
           disabled={loading}
-          className='absolute right-0 text-black h-full px-2'>
-          <SendIcon className='h-6 w-6 text-neutral-500 hover:text-neutral-200 transition-colors'/>
+          className='absolute right-4 h-full px-2 text-black'>
+          <SendIcon className='h-6 w-6 text-neutral-500 transition-colors hover:text-neutral-200'/>
         </button>
       </form>
     </div>

@@ -125,7 +125,7 @@ export default function SideBar() {
               <Link href={'/chats'}
                     className={`group py-2 px-4 relative text-sm flex items-center text-white hover:bg-[#1E1E1E] hover:text-white rounded-lg transition-colors duration-200 ease-in-out`}>
                 <p>New Chat</p> <span
-                className='absolute right-4 text-xs text-black bg-neutral-300 rounded-full px-2'>+</span>
+                className='absolute right-4 rounded-full bg-neutral-300 px-2 text-xs text-black'>+</span>
               </Link>
               <nav className='flex h-full w-full flex-col pb-3.5'>
                 <div className='mb-4 flex flex-row items-center justify-between'>

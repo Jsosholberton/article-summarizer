@@ -60,7 +60,7 @@ export default function Page({params}: { params: { token: string } }) {
   }, []);
 
   return (
-    <main className="flex w-full min-h-screen flex-col items-center bg-black justify-center gap-5 sm:p-24 px-12 py-20">
+    <main className="flex min-h-screen w-full flex-col items-center justify-center gap-5 bg-black px-12 py-20 sm:p-24">
       {
         loading ? <p>Loading...</p>
           : isValidToken
@@ -72,7 +72,7 @@ export default function Page({params}: { params: { token: string } }) {
                   <h3 className='text-2xl font-light text-white'>Summarizer</h3>
                   <p>Recover your password</p>
                   <label htmlFor="password" className='flex flex-col'>Password
-                    <input type='password' required name='password' className='px-2 py-1 text-black rounded'
+                    <input type='password' required name='password' className='rounded px-2 py-1 text-black'
                            value={password?.pwd}
                            onChange={e => setPassword(prevPassword => ({
                              ...prevPassword,
@@ -81,7 +81,7 @@ export default function Page({params}: { params: { token: string } }) {
                     />
                   </label>
                   <label htmlFor="password" className='flex flex-col'>Repeat password
-                    <input type='password' required name='password' className='px-2 py-1 text-black rounded'
+                    <input type='password' required name='password' className='rounded px-2 py-1 text-black'
                            value={password?.pwd2}
                            onChange={e => setPassword(prevPassword => ({
                              ...prevPassword,

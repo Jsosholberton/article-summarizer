@@ -32,14 +32,14 @@ export default function LostPwd() {
   }
 
   return (
-    <main className="flex w-full min-h-screen flex-col items-center bg-black justify-center gap-5 sm:p-24 px-12 py-20">
+    <main className="flex min-h-screen w-full flex-col items-center justify-center gap-5 bg-black px-12 py-20 sm:p-24">
       <form
         onSubmit={handleSubmit}
         className='flex w-full flex-col items-center justify-around gap-4 rounded-xl px-10 py-16'>
         <h3 className='text-2xl font-light text-white'>Summarizer</h3>
         <p>Recover your password</p>
         <label htmlFor="email" className='flex flex-col'>Email
-          <input type='email' name='email' required className='px-2 py-1 text-black rounded' value={email}
+          <input type='email' name='email' required className='rounded px-2 py-1 text-black' value={email}
                  onChange={e => setEmail(e.target.value)}/>
         </label>
         <Button type='submit' loading={loading}>Recover</Button>

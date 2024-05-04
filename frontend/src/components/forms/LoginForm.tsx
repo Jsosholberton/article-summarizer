@@ -67,11 +67,11 @@ export default function LoginForm() {
       className='flex w-full flex-col items-center justify-around gap-4 rounded-xl px-10 py-16'>
       <h3 className='text-2xl font-light text-white'>Summarizer</h3>
       <label htmlFor="email" className='flex flex-col'>Email
-        <input type='email' name='email' required className='px-2 py-1 text-black rounded' value={email}
+        <input type='email' name='email' required className='rounded px-2 py-1 text-black' value={email}
                onChange={e => setEmail(e.target.value)}/>
       </label>
       <label htmlFor="password" className='flex flex-col'>Password
-        <input type='password' required name='password' className='px-2 py-1 text-black rounded' value={password}
+        <input type='password' required name='password' className='rounded px-2 py-1 text-black' value={password}
                onChange={e => setPassword(e.target.value)}/>
       </label>
       <Button type='submit' loading={loading}>Login</Button>
