@@ -12,7 +12,7 @@ export default function Chat() {
 
   const router = useRouter()
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
 

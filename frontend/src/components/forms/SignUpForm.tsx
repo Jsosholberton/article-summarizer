@@ -11,7 +11,8 @@ export default function SignUpForm() {
   const [alert, setAlert] = useState<{ error: boolean, msg: string }>()
 
 
-  const handleSignUp = async () => {
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault()
     setLoading(true)
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/`, {

@@ -77,7 +77,7 @@ export default function Page({params}: { params: { id: string } }) {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage('');
     const copyChat: Partial<ChatTypes> = {

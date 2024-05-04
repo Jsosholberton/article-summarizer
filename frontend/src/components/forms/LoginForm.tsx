@@ -36,7 +36,8 @@ export default function LoginForm() {
   /**
    * @function handleLogin - Function to handle the login of the user.
    */
-  const handleLogin = async () => {
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault()
     setLoading(true)
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/login`, {
