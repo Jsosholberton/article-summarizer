@@ -2,7 +2,7 @@
 import Button from "@/components/atoms/Button";
 import {useState} from "react";
 
-export default function lostPwd() {
+export default function LostPwd() {
 
   const [email, setEmail] = useState<string>()
   const [loading, setLoading] = useState(false)
